@@ -97,8 +97,3 @@ void main() {
 	system("pause");
 	delete[] arr;
 }
-
-//jsfh
-//sadfhsjklf
-//sadfhjadsjfs
-//fhasl'f'
