@@ -1,99 +1,53 @@
 #include <iostream>
+#include "targil.1-2.cpp"
 
 using namespace std;
 
-////////////////////////////////////////////////////////////////////
-
-class time {
+class mainScreen {
 public:
-	time();
-	void setTime(int h, int m, int s);
-	void printTime();
-	~time();
+	mainScreen() {
+		printMenu();
+		getInput(0);
+	}
+
+	void printMenu() {
+		system("cls");
+		cout << "Welcome to select pgae!" << endl <<
+			"-----------------------" << endl <<
+			"Choose your option:" << endl <<
+			"1.1 - hagasha 1" << endl <<
+			endl <<
+			"2.1 - targil 1-2" << endl <<
+			endl <<
+			"Exit - Quit" << endl <<
+			"Enter your choise: ";
+	}
+	void getInput(int flag) {
+		if (flag) {
+			printMenu();
+		}
+		cin >> input;
+		if (!strcmp(input, "2.1")) {
+			system("cls");
+			targil_1_2();
+		}
+		else if (!strcmp(input, "quit") || !strcmp(input, "0")) {
+			exit(0);
+		}
+		else {
+			cout << "You have entered inavlid input" << endl << endl;
+			system("pause");
+			getInput(1);
+		}
+	}
+	~mainScreen() {
+		cout << "you have exited the program" << endl << endl;
+		system("pause");
+	}
 private:
-	int hours, minutes, seconds;
+	char input[5] = "";
 };
 
-time::time() {
-	hours = 0;
-	minutes = 0;
-	seconds = 0;
-}
-
-void time::setTime(int h, int m, int s) {
-	seconds = s % 60;
-	
-	m += s / 60 ? s / 60 : 0;
-	minutes += m % 60;
-
-	h += m / 60 ? m / 60 : 0;
-	hours += h;
-}
-
-void time::printTime() {
-	cout << ((hours < 9) ? ("0") : ("")) << hours << ":"
-		<< ((minutes < 9) ? ("0") : ("")) << minutes << ":"
-		<< ((seconds < 9) ? ("0") : ("")) << seconds << endl;
-}
-
-time::~time() {
-	hours = 0;
-	minutes = 0;
-	seconds = 0;
-}
-
-////////////////////////////////////////////////////////////////////
-
-time timeClone(const time &in) {
-	return in;
-}
-
-void timeInput(int &h, int &m, int &s) {
-	cout << "Enter hour, min, sec: ";
-	do {
-		cin >> h >> m >> s;
-		if (h < 0 || m < 0 || s < 0) {
-			cout << "You must enter positive integers for time" << endl << endl;
-		}
-	} while (h < 0 || m < 0 || s < 0);
-}
-
-////////////////////////////////////////////////////////////////////
-
 void main() {
-	time *arr;
-	int size;
-	
-	cout << "Enter how many values: ";
-	do {
-		cin >> size;
-		if (size < 1) {
-			cout << "You must enter a positive integer" << endl << endl;
-		}
-	} while (size < 1);
-	arr = new time[size];
-
-	for (int i = 0;i < size;i++) {
-		int h, m, s;
-		timeInput(h, m, s);
-		(arr+i)->setTime(h, m, s);
-	}
-
-	for (int i = 0;i < size;i++) {
-		(arr + i)->printTime();
-	}
-	cout << endl;
-	system("pause");
-
-	cout << endl << endl;
-	time in, out;
-	int h, m, s;
-	timeInput(h, m, s);
-	in.setTime(h, m, s);
-	out = timeClone(in);
-	out.printTime();
-
-	cout << endl;
-	system("pause");
-	delete[] arr;
+	mainScreen A;
 }
