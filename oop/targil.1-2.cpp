@@ -1,28 +1,25 @@
-#pragma once
-
 #include <iostream>
-
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////
 
-class time {
+class myTime {
 public:
-	time();
+	myTime();
 	void setTime(int h, int m, int s);
 	void printTime();
-	~time();
+	~myTime();
 private:
 	int hours, minutes, seconds;
 };
 
-time::time() {
+myTime::myTime() {
 	hours = 0;
 	minutes = 0;
 	seconds = 0;
 }
 
-void time::setTime(int h, int m, int s) {
+void myTime::setTime(int h, int m, int s) {
 	seconds = s % 60;
 
 	m += s / 60 ? s / 60 : 0;
@@ -32,13 +29,13 @@ void time::setTime(int h, int m, int s) {
 	hours += h;
 }
 
-void time::printTime() {
+void myTime::printTime() {
 	cout << ((hours < 9) ? ("0") : ("")) << hours << ":"
 		<< ((minutes < 9) ? ("0") : ("")) << minutes << ":"
 		<< ((seconds < 9) ? ("0") : ("")) << seconds << endl;
 }
 
-time::~time() {
+myTime::~myTime() {
 	hours = 0;
 	minutes = 0;
 	seconds = 0;
@@ -46,7 +43,7 @@ time::~time() {
 
 ////////////////////////////////////////////////////////////////////
 
-time timeClone(const time &in) {
+myTime timeClone(const myTime &in) {
 	return in;
 }
 
@@ -63,7 +60,7 @@ void timeInput(int &h, int &m, int &s) {
 ////////////////////////////////////////////////////////////////////
 
 void targil_1_2() {
-	time *arr;
+	myTime *arr;
 	int size;
 
 	cout << "Enter how many values: ";
@@ -73,7 +70,7 @@ void targil_1_2() {
 			cout << "You must enter a positive integer" << endl << endl;
 		}
 	} while (size < 1);
-	arr = new time[size];
+	arr = new myTime[size];
 
 	for (int i = 0;i < size;i++) {
 		int h, m, s;
@@ -88,7 +85,7 @@ void targil_1_2() {
 	system("pause");
 
 	cout << endl << endl;
-	time in, out;
+	myTime in, out;
 	int h, m, s;
 	timeInput(h, m, s);
 	in.setTime(h, m, s);
