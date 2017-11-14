@@ -22,6 +22,7 @@ public:
 			endl <<
 			"2.1 - targil 1-2" << endl <<
 			"2.3 - targil 3" << endl <<
+			"2.4 - targil 4" << endl<<
 			endl <<
 			"Exit - Quit" << endl <<
 			"Enter your choise: ";
@@ -36,6 +37,10 @@ public:
 		else if (!strcmp(input, "2.3")) {
 			system("cls");
 			tarigl_3();
+		}
+		else if (!strcmp(input, "2.4")) {
+			system("cls");
+			targil_4();
 		}
 		else if (!strcmp(input, "quit") || !strcmp(input, "0")) {
 			return 0;

@@ -24,6 +24,9 @@
     <ClCompile Include="targil.3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="targil.4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers.h">
