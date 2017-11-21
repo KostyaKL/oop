@@ -58,7 +58,7 @@ public:
 	}
 	~mainScreen() {
 		cout <<endl << "you have exited the program" << endl << endl;
-		system("pause");
+		//system("pause");
 	}
 private:
 	char input[5] = "";

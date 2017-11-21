@@ -1,3 +1,12 @@
+/*
+Assigned by:
+Student 1: Melinda Levi ID:201310356
+Student 2: Kostya Lokshin ID:310765821
+
+Lecturer: Dr. Vladimir Nodelman  61307-1
+Targil: Dr. Leonid Kugel 661307-1 / Motti Rosso 661307-2
+*/
+
 #include "headers.h"
 #include <iostream>
 using namespace std;
@@ -63,7 +72,7 @@ int Circle::getColor() const {
 }
 
 void Circle::setColor(int color) {
-	this->color >= 0 ? color : 0;
+	this->color = color >= 0 ? color : 0;
 }
 
 bool Circle::contains(const Point &p) const {
@@ -78,7 +87,7 @@ bool Circle::contains(const Point &p) const {
 }
 
 void Circle::print() const {
-	cout << "Circle center=(" << center.getX() << "," << center.getY() << " radius=" << radius << " color=" << color << endl;
+	cout << "Circle center=(" << center.getX() << "," << center.getY() << ") radius=" << radius << " color=" << color << endl;
 }
 
 class Collection {
@@ -92,37 +101,45 @@ private:
 	Circle **circles;
 };
 
-Collection::Collection(int radius=1, int width=1, int height=1, int color=0) {
-	int x, y;
+Collection::Collection(int radius = 1, int width = 1, int height = 1, int color = 0) {
+	int x, y, k;
 	x = 0;
 	y = 0;
+	k = 0;
 	count = height*width;
-	circles = new Circle*[height];
-	for (int i = 0;i < height;i++) {
-		circles[i] = new Circle[width];
-	}
+	circles = new Circle*;
+	*circles = new Circle[count];
 
 	for (int i = 0;i < height;i++) {
 		for (int j = 0;j < width;j++) {
-			circles[i][j] = new Circle(x, y, radius, color);
-			y += 2 * radius;
+			new(&circles[0][k]) Circle(x, y, radius, color);
+			x += 2 * radius;
+			k++;
 		}
-		y = 0;
-		x += 2 * radius;
+		x = 0;
+		y += 2 * radius;
 	}
 
 }
 
 Collection::~Collection() {
-	delete[count] circles;
+	
+	delete[] *circles;
+	delete circles;
 }
 
 Circle &Collection::getCircleAt(const Point &p) {
-
+	for (int i = 0;i < count;i++) {
+		if (circles[0][i].contains(p)) {
+			return circles[0][i];
+		}
+	}
 }
 
 void Collection::print() const {
-
+	for (int i = 0;i < count;i++) {
+		circles[0][i].print();
+	}
 }
 
 void hagasha_1() {
@@ -133,4 +150,57 @@ void hagasha_1() {
 	g.getCircleAt(p).setColor(2);
 	cout << "-- after setColor(2) --" << endl;
 	g.print();
+
+	system("pause");
 }
+
+
+
+
+//Collection::Collection(int radius=1, int width=1, int height=1, int color=0) {
+//	int x, y;
+//	h = height;
+//	w = width;
+//	x = 0;
+//	y = 0;
+//	count = height*width;
+//	circles = new Circle*[height];
+//	for (int i = 0;i < height;i++) {
+//		circles[i] = new Circle[width];
+//	}
+//
+//	for (int i = 0;i < height;i++) {
+//		for (int j = 0;j < width;j++) {
+//			new(&circles[i][j]) Circle(x, y, radius, color);
+//			x += 2 * radius;
+//		}
+//		x = 0;
+//		y += 2 * radius;
+//	}
+//
+//}
+
+//Collection::~Collection() {
+//	for (int i = 0;i < h;i++) {
+//		delete[] circles[i];
+//	}
+//	delete[] circles;
+//}
+
+//Circle &Collection::getCircleAt(const Point &p) {
+//	for (int i = 0;i < count;i++) {
+//		for (int j = 0;j < count;j++) {
+//			if (circles[i][j].contains(p)) {
+//				return circles[i][j];
+//			}
+//		}
+//	}
+//}
+
+//void Collection::print() const {
+//	for (int i = 0;i < count;i++) {
+//		for (int j = 0;j < count;j++) {
+//			circles[i][j].print();
+//		}
+//	}
+//}
