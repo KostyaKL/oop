@@ -102,43 +102,42 @@ private:
 };
 
 Collection::Collection(int radius = 1, int width = 1, int height = 1, int color = 0) {
-	int x, y, k;
+	int x, y;
 	x = 0;
 	y = 0;
-	k = 0;
+	height = height > 0 ? height : 1;
+	width = width > 0 ? width : 1;
 	count = height*width;
-	circles = new Circle*;
-	*circles = new Circle[count];
+	circles = new Circle*[count];
 
 	for (int i = 0;i < height;i++) {
 		for (int j = 0;j < width;j++) {
-			new(&circles[0][k]) Circle(x, y, radius, color);
+			circles[i*width + j] = new Circle(x, y, radius, color);
 			x += 2 * radius;
-			k++;
 		}
 		x = 0;
 		y += 2 * radius;
 	}
-
 }
 
 Collection::~Collection() {
-	
-	delete[] *circles;
-	delete circles;
+	for (int i = 0;i < count;i++) {
+		delete circles[i];
+	}
+	delete[] circles;
 }
 
 Circle &Collection::getCircleAt(const Point &p) {
 	for (int i = 0;i < count;i++) {
-		if (circles[0][i].contains(p)) {
-			return circles[0][i];
+		if (circles[i]->contains(p)) {
+			return *circles[i];
 		}
 	}
 }
 
 void Collection::print() const {
 	for (int i = 0;i < count;i++) {
-		circles[0][i].print();
+		circles[i]->print();
 	}
 }
 
@@ -153,54 +152,3 @@ void hagasha_1() {
 
 	system("pause");
 }
-
-
-
-
-//Collection::Collection(int radius=1, int width=1, int height=1, int color=0) {
-//	int x, y;
-//	h = height;
-//	w = width;
-//	x = 0;
-//	y = 0;
-//	count = height*width;
-//	circles = new Circle*[height];
-//	for (int i = 0;i < height;i++) {
-//		circles[i] = new Circle[width];
-//	}
-//
-//	for (int i = 0;i < height;i++) {
-//		for (int j = 0;j < width;j++) {
-//			new(&circles[i][j]) Circle(x, y, radius, color);
-//			x += 2 * radius;
-//		}
-//		x = 0;
-//		y += 2 * radius;
-//	}
-//
-//}
-
-//Collection::~Collection() {
-//	for (int i = 0;i < h;i++) {
-//		delete[] circles[i];
-//	}
-//	delete[] circles;
-//}
-
-//Circle &Collection::getCircleAt(const Point &p) {
-//	for (int i = 0;i < count;i++) {
-//		for (int j = 0;j < count;j++) {
-//			if (circles[i][j].contains(p)) {
-//				return circles[i][j];
-//			}
-//		}
-//	}
-//}
-
-//void Collection::print() const {
-//	for (int i = 0;i < count;i++) {
-//		for (int j = 0;j < count;j++) {
-//			circles[i][j].print();
-//		}
-//	}
-//}
