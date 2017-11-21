@@ -1,6 +1,8 @@
 #ifndef HEADERS
 #define HEADERS
 
+void hagasha_1();
+
 void targil_1_2();
 
 void tarigl_3();

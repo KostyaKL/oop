@@ -30,7 +30,11 @@ public:
 	int getInput() {
 		printMenu();
 		cin >> input;
-		if (!strcmp(input, "2.1")) {
+		if (!strcmp(input, "1.1")) {
+			system("cls");
+			hagasha_1();
+		}
+		else if (!strcmp(input, "2.1")) {
 			system("cls");
 			targil_1_2();
 		}
