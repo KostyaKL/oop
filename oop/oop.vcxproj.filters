@@ -30,6 +30,9 @@
     <ClCompile Include="hagasha.1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hagasha.2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers.h">
