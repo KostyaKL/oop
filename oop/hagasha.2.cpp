@@ -174,16 +174,8 @@ const Matrix &operator*(const Matrix &m2, int num) {
 
 const Matrix &Matrix::operator-() {
 	Matrix *tmp;
-	int *m;
 	tmp = new Matrix;
-	tmp->row = row;
-	tmp->col = col;
-	tmp->size = size;
-	m = new int[size];
-	for (int i = 0;i < size;i++) {
-		m[i] = mat[i] * -1;
-	}
-	tmp->mat = m;
+	*tmp = *this*(-1);
 	return *tmp;
 }
 

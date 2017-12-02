@@ -148,6 +148,7 @@
     <ClCompile Include="targil.1-2.cpp" />
     <ClCompile Include="targil.3.cpp" />
     <ClCompile Include="targil.4.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers.h" />

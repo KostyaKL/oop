@@ -11,4 +11,6 @@ void tarigl_3();
 
 void targil_4();
 
+void test();
+
 #endif
