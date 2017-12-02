@@ -7,9 +7,13 @@ Lecturer: Dr. Vladimir Nodelman  61307-1
 Targil: Dr. Leonid Kugel 661307-1 / Motti Rosso 661307-2
 */
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #include "headers.h"
 #include <iostream>
 using namespace std;
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class Matrix {
 public:
@@ -26,7 +30,7 @@ public:
 	friend const Matrix &operator*(int num, const Matrix &m2);
 	friend const Matrix &operator*(const Matrix &m2, int num);
 
-	Matrix &operator-();
+	const Matrix &operator-();
 	friend const Matrix &operator-(const Matrix &m1, const Matrix &m2);
 
 	int *operator[](int c) const;
@@ -37,20 +41,23 @@ private:
 	int row, col, size;
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 Matrix::Matrix(int r = 0, int c = 0) {
 	row = r;
 	col = c;
 	size = row*col;
-	if (size){
+	if (size) {
 		mat = new int[size];
 		for (int i = 0; i < size;i++) {
 			mat[i] = 0;
 		}
-}
+	}
 	else
 		mat = NULL;
 
 }
+
 Matrix::Matrix(const Matrix &m2) {
 	row = m2.row;
 	col = m2.col;
@@ -60,6 +67,7 @@ Matrix::Matrix(const Matrix &m2) {
 		mat[i] = m2.mat[i];
 	}
 }
+
 const Matrix &Matrix::operator=(const Matrix &m2) {
 	row = m2.row;
 	col = m2.col;
@@ -77,14 +85,17 @@ const Matrix &Matrix::operator=(const Matrix &m2) {
 	mat = temp;
 	return *this;
 }
+
 Matrix::~Matrix() {
 	if (mat)
 		delete[] mat;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const Matrix &operator+(const Matrix &m1, const Matrix &m2) {
-	if (m1.row != m2.row || m1.col != m2.col)
-		return NULL;
+	/*if (m1.row != m2.row || m1.col != m2.col)
+		return m1;*/
 	Matrix *tmp;
 	tmp = new Matrix(m1.col, m1.row);
 	for (int i = 0;i < tmp->size;i++)
@@ -93,6 +104,7 @@ const Matrix &operator+(const Matrix &m1, const Matrix &m2) {
 	}
 	return *tmp;
 }
+
 const Matrix &operator+(int num, const Matrix &m2) {
 	Matrix *tmp;
 	tmp = new Matrix;
@@ -104,6 +116,7 @@ const Matrix &operator+(int num, const Matrix &m2) {
 	}
 	return *tmp;
 }
+
 const Matrix &operator+(const Matrix &m2, int num) {
 	Matrix *tmp;
 	tmp = new Matrix;
@@ -115,9 +128,12 @@ const Matrix &operator+(const Matrix &m2, int num) {
 	}
 	return *tmp;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const Matrix &operator*(const Matrix &m1, const Matrix &m2) {
-	if (m1.row != m2.col)
-		return NULL;
+	/*if (m1.row != m2.col)
+		return m1;*/
 	Matrix *tmp;
 	tmp = new Matrix(m1.row, m2.col);
 	for (int i = 0;i < tmp->row;i++) {
@@ -154,7 +170,9 @@ const Matrix &operator*(const Matrix &m2, int num) {
 	return *tmp;
 }
 
-Matrix &Matrix::operator-() {
+/////////////////////////////////////////////////////////////////////////////////////////
+
+const Matrix &Matrix::operator-() {
 	Matrix *tmp;
 	int *m;
 	tmp = new Matrix;
@@ -168,9 +186,10 @@ Matrix &Matrix::operator-() {
 	tmp->mat = m;
 	return *tmp;
 }
+
 const Matrix &operator-(const Matrix &m1, const Matrix &m2) {
-	if (m1.row != m2.row || m1.col != m2.col)
-		return NULL;
+	/*if (m1.row != m2.row || m1.col != m2.col)
+		return m1;*/
 	Matrix *tmp;
 	tmp = new Matrix(m1.col, m1.row);
 	for (int i = 0;i < tmp->size;i++)
@@ -180,9 +199,13 @@ const Matrix &operator-(const Matrix &m1, const Matrix &m2) {
 	return *tmp;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int *Matrix::operator[](int c) const {
 	return &mat[c*row];
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 ostream &operator<<(ostream &output, const Matrix &m) {
 	for (int i = 0;i < m.row;i++) {
@@ -194,6 +217,8 @@ ostream &operator<<(ostream &output, const Matrix &m) {
 	return output;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void hagasha_2() {
 	Matrix m(2, 2);
 	m[0][0] = 2;
@@ -201,10 +226,14 @@ void hagasha_2() {
 	cout << m << endl;
 	m = m;
 	const Matrix s = -m;
+	//const Matrix s(8, 12);
 	cout << m << endl << s << endl;
 	m = s + 2 * -m * m * 2 - s;
 	cout << m << endl << s << endl;
 	cout << s[1][1] << endl;
 
+	cout << endl;
 	system("pause");
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
