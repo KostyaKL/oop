@@ -4,7 +4,7 @@ Student 1: Melinda Levi ID:201310356
 Student 2: Kostya Lokshin ID:310765821
 
 Lecturer: Dr. Vladimir Nodelman  61307-1
-Targil: Dr. Leonid Kugel 661307-1 / Motti Rosso 661307-2
+Targil: Dr. Leonid Kugel 661307-1 / Haim Shafir 661307-2
 */
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -41,19 +41,14 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Matrix::Matrix(int r = 0, int c = 0) {
-	row = r;
-	col = c;
+Matrix::Matrix(int r = 1, int c = 1) {
+	row = r > 0 ? r : 1;
+	col = c > 0 ? c : 1;
 	size = row*col;
-	if (size) {
-		mat = new int[size];
-		for (int i = 0; i < size;i++) {
-			mat[i] = 0;
-		}
+	mat = new int[size];
+	for (int i = 0; i < size;i++) {
+		mat[i] = 0;
 	}
-	else
-		mat = NULL;
-
 }
 
 Matrix::Matrix(const Matrix &m2) {
@@ -70,7 +65,7 @@ const Matrix &Matrix::operator=(const Matrix &m2) {
 	if (&m2 != this) {
 		if (size != m2.size) {
 			size = m2.size;
-			if (mat)
+			if (mat!=NULL)
 				delete[] mat;
 			mat = new int[size];
 		}
@@ -86,7 +81,7 @@ const Matrix &Matrix::operator=(const Matrix &m2) {
 }
 
 Matrix::~Matrix() {
-	if (mat)
+	if (mat!=NULL)
 		delete[] mat;
 }
 
@@ -185,7 +180,6 @@ void hagasha_2() {
 	cout << m << endl;
 	m = m;
 	const Matrix s = -m;
-	//const Matrix s(8, 12);
 	cout << m << endl << s << endl;
 	m = s + 2 * -m * m * 2 - s;
 	cout << m << endl << s << endl;
