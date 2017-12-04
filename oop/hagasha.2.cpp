@@ -22,16 +22,14 @@ public:
 	const Matrix &operator=(const Matrix &m2);
 	~Matrix();
 
-	friend const Matrix &operator+(const Matrix &m1, const Matrix &m2);
-	friend const Matrix &operator+(int num, const Matrix &m2);
-	friend const Matrix &operator+(const Matrix &m2, int num);
+	Matrix &operator+(const Matrix &m2) const;
+	
+	Matrix &operator*(int num);
+	Matrix &operator*(const Matrix &m2);
+	friend Matrix &operator*(int num, const Matrix &m2);
 
-	friend const Matrix &operator*(const Matrix &m1, const Matrix &m2);
-	friend const Matrix &operator*(int num, const Matrix &m2);
-	friend const Matrix &operator*(const Matrix &m2, int num);
-
-	const Matrix &operator-();
-	friend const Matrix &operator-(const Matrix &m1, const Matrix &m2);
+	Matrix &operator-();
+	Matrix &operator-(const Matrix &m2);
 
 	int *operator[](int c) const;
 
@@ -69,20 +67,21 @@ Matrix::Matrix(const Matrix &m2) {
 }
 
 const Matrix &Matrix::operator=(const Matrix &m2) {
-	row = m2.row;
-	col = m2.col;
-	size = m2.size;
-	int *temp;
-	
-	temp = new int[size];
-	for (int i = 0;i < row;i++) {
-		for (int j = 0;j < col;j++) {
-			temp[i*row + j] = m2.mat[i*row + j];
+	if (&m2 != this) {
+		if (size != m2.size) {
+			size = m2.size;
+			if (mat)
+				delete[] mat;
+			mat = new int[size];
+		}
+		row = m2.row;
+		col = m2.col;
+		for (int i = 0;i < row;i++) {
+			for (int j = 0;j < col;j++) {
+				mat[i*row + j] = m2.mat[i*row + j];
+			}
 		}
 	}
-	if (mat)
-		delete[] mat;
-	mat = temp;
 	return *this;
 }
 
@@ -93,72 +92,43 @@ Matrix::~Matrix() {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const Matrix &operator+(const Matrix &m1, const Matrix &m2) {
-	/*if (m1.row != m2.row || m1.col != m2.col)
-		return m1;*/
+Matrix &Matrix::operator+(const Matrix &m2) const {
 	Matrix *tmp;
-	tmp = new Matrix(m1.col, m1.row);
-	for (int i = 0;i < tmp->size;i++)
-	{
-		tmp->mat[i] = m1.mat[i] + m2.mat[i];
-	}
-	return *tmp;
-}
-
-const Matrix &operator+(int num, const Matrix &m2) {
-	Matrix *tmp;
-	tmp = new Matrix;
-	*tmp = m2;
-	for (int i = 0;i < tmp->row;i++) {
-		for (int j = 0;j < tmp->col;j++) {
-			tmp->mat[i*tmp->row + j] += num;
-		}
-	}
-	return *tmp;
-}
-
-const Matrix &operator+(const Matrix &m2, int num) {
-	Matrix *tmp;
-	tmp = new Matrix;
-	*tmp = m2;
-	for (int i = 0;i < tmp->row;i++) {
-		for (int j = 0;j < tmp->col;j++) {
-			tmp->mat[i*tmp->row + j] += num;
-		}
+	tmp = new Matrix(row,col);
+	for (int i = 0;i < size;i++) {
+		tmp->mat[i] = mat[i] + m2.mat[i];
 	}
 	return *tmp;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const Matrix &operator*(const Matrix &m1, const Matrix &m2) {
-	/*if (m1.row != m2.col)
-		return m1;*/
-	Matrix *tmp;
-	tmp = new Matrix(m1.row, m2.col);
-	for (int i = 0;i < tmp->row;i++) {
-		for (int j = 0;j < tmp->col;j++) {
-			for (int k = 0;k < tmp->row;k++) {
-				tmp->mat[i*tmp->row + j] += m1.mat[k*tmp->row + j]*m2.mat[i*tmp->row + k];
+Matrix &Matrix::operator*(int num) {
+	for (int i = 0;i < row;i++) {
+		for (int j = 0;j < col;j++) {
+			mat[i*row + j] *= num;
+		}
+	}
+	return *this;
+}
+
+Matrix &Matrix::operator*(const Matrix &m2) {
+	int *tmp;
+	tmp = new int[row * m2.col];
+	for (int i = 0; i < row*m2.col;i++)
+		tmp[i] = 0;
+	for (int i = 0;i < row;i++) {
+		for (int j = 0;j < col;j++) {
+			for (int k = 0;k < row;k++) {
+				tmp[i*row + j] += mat[k*row + j] * m2.mat[i*row + k];
 			}
 		}
 	}
-	return *tmp;
+	mat = tmp;
+	return *this;
 }
 
-const Matrix &operator*(int num, const Matrix &m2) {
-	Matrix *tmp;
-	tmp = new Matrix;
-	*tmp = m2;
-	for (int i = 0;i < tmp->row;i++) {
-		for (int j = 0;j < tmp->col;j++) {
-			tmp->mat[i*tmp->row + j] *= num;
-		}
-	}
-	return *tmp;
-}
-
-const Matrix &operator*(const Matrix &m2, int num) {
+Matrix &operator*(int num, const Matrix &m2) {
 	Matrix *tmp;
 	tmp = new Matrix;
 	*tmp = m2;
@@ -172,23 +142,20 @@ const Matrix &operator*(const Matrix &m2, int num) {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const Matrix &Matrix::operator-() {
+Matrix &Matrix::operator-() {
 	Matrix *tmp;
 	tmp = new Matrix;
-	*tmp = *this*(-1);
+	*tmp = *this;
+	*tmp*(-1);
 	return *tmp;
 }
 
-const Matrix &operator-(const Matrix &m1, const Matrix &m2) {
-	/*if (m1.row != m2.row || m1.col != m2.col)
-		return m1;*/
-	Matrix *tmp;
-	tmp = new Matrix(m1.col, m1.row);
-	for (int i = 0;i < tmp->size;i++)
+Matrix &Matrix::operator-(const Matrix &m2) {
+	for (int i = 0;i < size;i++)
 	{
-		tmp->mat[i] = m1.mat[i] - m2.mat[i];
+		mat[i] = mat[i] - m2.mat[i];
 	}
-	return *tmp;
+	return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
