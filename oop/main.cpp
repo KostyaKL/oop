@@ -41,6 +41,10 @@ public:
 			system("cls");
 			hagasha_2();
 		}
+		else if (!strcmp(input, "1.2")) {
+			system("cls");
+			hagasha_3();
+		}
 		else if (!strcmp(input, "2.1")) {
 			system("cls");
 			targil_1_2();
