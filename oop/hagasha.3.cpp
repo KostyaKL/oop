@@ -125,6 +125,7 @@ public:
 
 	double getArea() const; //area of Rectangle
 	double getPerim() const; //perimiter of Rectangle
+
 private:
 	Point b_left, t_right; //b_left - bottom left corner of Rectangle, t_right - top right corner of Rectangle
 	int height, width; //height, width of Rectangle
