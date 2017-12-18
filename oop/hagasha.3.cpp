@@ -13,6 +13,8 @@ Targil: Dr. Leonid Kugel 661307-1 / Haim Shafir 661307-2
 #include <iostream>
 using namespace std;
 
+#define pi 3.14159265359
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class Point {
@@ -71,44 +73,17 @@ int Point::getY() const {
 
 class Shape { //abstract class shape
 public:
-	/*Shape();
-	Shape(const Shape &s);
-	const Shape &operator=(const Shape &s);
-	virtual ~Shape();*/
-
 	virtual double getArea() const = 0; //abstract method allowing polymorphism to calculate area of shape
 	virtual double getPerim() const = 0; //abstract method allowing polymorphism to calculate perimiter of shape
 
 private:
-	//Point ancor;
-};
 
-//Shape::Shape() {
-//	//ancor.setX(0);
-//	//ancor.setY(0);
-//}
-//
-//Shape::Shape(const Shape &s) {
-//	//ancor = s.ancor;
-//}
-//
-//const Shape &Shape::operator=(const Shape &s) {
-//	//ancor = s.ancor;
-//	return *this;
-//}
-//
-//Shape::~Shape() {
-//
-//}
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class Polygon : public Shape { //abstract class polygon, son of shape
 public:
-	/*Polygon();
-	Polygon(const Polygon &p);
-	const Polygon &operator=(const Polygon &p);
-	virtual ~Polygon();*/
 
 private:
 
@@ -262,7 +237,6 @@ public:
 private:
 	Point o; //Circle center
 	int radius; //Circle radius
-	const double pi = 3.14159265359; //value of pai
 };
 
 Circle::Circle(Point c, int r) {
@@ -287,7 +261,7 @@ Circle::~Circle() {
 
 
 double Circle::getArea() const {
-	return pi*radius*radius; //return area
+	return pi * radius*radius; //return area
 }
 
 double Circle::getPerim() const {
