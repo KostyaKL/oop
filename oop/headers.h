@@ -7,6 +7,8 @@ void hagasha_2();
 
 void hagasha_3();
 
+void hagasha_4();
+
 void targil_1_2();
 
 void tarigl_3();

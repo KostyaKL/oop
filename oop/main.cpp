@@ -21,6 +21,7 @@ public:
 			"1.1 - hagasha 1" << endl <<
 			"1.2 - hagasha 2" << endl <<
 			"1.3 - hagasha 3" << endl <<
+			"1.4 - hagasha 4" << endl <<
 			endl <<
 			"2.1 - targil 1-2" << endl <<
 			"2.3 - targil 3" << endl <<
@@ -45,6 +46,10 @@ public:
 		else if (!strcmp(input, "1.3")) {
 			system("cls");
 			hagasha_3();
+		}
+		else if (!strcmp(input, "1.3")) {
+			system("cls");
+			hagasha_4();
 		}
 		else if (!strcmp(input, "2.1")) {
 			system("cls");
