@@ -11,16 +11,19 @@ Targil: Dr. Leonid Kugel 661307-1 / Haim Shafir 661307-2
 
 #include "headers.h"
 #include <iostream>
+#include <vector>
 using namespace std;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template <class T>
 class Node {
 public:
 	Node();
 	~Node();
 private:
-	void num;
+	T num;
 	Node * father;
 	Node *left;
 	Node *right;
@@ -49,7 +52,7 @@ public:
 
 	friend ostream &operator<<(ostream &out, const Tree &tree);
 private:
-	Node * root;
+	Node<T> * root;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
