@@ -47,7 +47,7 @@ public:
 			system("cls");
 			hagasha_3();
 		}
-		else if (!strcmp(input, "1.3")) {
+		else if (!strcmp(input, "1.4")) {
 			system("cls");
 			hagasha_4();
 		}
